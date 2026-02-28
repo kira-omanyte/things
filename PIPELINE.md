@@ -44,13 +44,13 @@ Typical render time: < 1 second for simple geometry, minutes for complex `$fn` v
 
 ```bash
 xvfb-run prusa-slicer --export-gcode \
-  --load ~/.config/PrusaSlicer/creality-k1.ini \
+  --load ~/.config/PrusaSlicer/creality-k1-flat.ini \
   -o output.gcode input.stl
 ```
 
 ### CRITICAL: Profile format
 
-The slicer profile at `~/.config/PrusaSlicer/creality-k1.ini` **MUST be flat key-value pairs** — no `[section:Name]` headers. PrusaSlicer's `--load` flag silently ignores settings inside section headers and falls back to defaults (which use bare `G28` instead of the K1's `START_PRINT` macro).
+Use `creality-k1-flat.ini` (not `creality-k1.ini`). The flat version has no section headers. The slicer profile **MUST be flat key-value pairs** — no `[section:Name]` headers. PrusaSlicer's `--load` flag silently ignores settings inside section headers and falls back to defaults (which use bare `G28` instead of the K1's `START_PRINT` macro).
 
 **Symptom of broken profile:** Gcode starts with `G28 ; home all axes` instead of `START_PRINT EXTRUDER_TEMP=... BED_TEMP=...`. This means no bed heating, no leveling, no purge line. Result: macaroni.
 
